@@ -1,6 +1,7 @@
 package com.example.finalexam;
 
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+    }
+
+    protected void onStart(){
+        super.onStart();
         mSpinner = (Spinner) findViewById(R.id.spinner);
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -102,8 +108,6 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
 
-                   // JSONObject jsonArray = response.getJSONObject("data");
-                 //   JSONObject jr = jsonArray.getJSONObject("latest_data");
 
                     JSONArray jsonArray = response.getJSONArray("data");
 
@@ -138,27 +142,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+public void notifyDeaths(){
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+            .setContentTitle("Deaths")
+            .setContentText("Test")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-    public static void geData(String country){
-        String url = "http://corona-api.com/countries/lk";
-        Log.v("item", "test 111");
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+}
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //textView.setText("Response: " + response.toString());
-                        Log.v("Response", (String) response.toString());
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        Log.v("Error", (String) error.toString());
-
-                    }
-                });
-    }
 
 }
 
